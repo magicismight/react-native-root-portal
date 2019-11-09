@@ -35,7 +35,7 @@
   ],
   "devDependencies": {
     "@types/react": "^16.9.5",
-    "@types/react-native": "^0.60.19",
+    "@types/react-native": "^0.60.22",
     "@typescript-eslint/eslint-plugin": "^2.3.3",
     "@typescript-eslint/parser": "^2.3.3",
     "eslint": "^6.5.1",
@@ -49,5 +49,8 @@
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "react-native-root-siblings": "^4.0.3"
   }
 }
