@@ -1,0 +1,53 @@
+{
+  "version": "0.0.1-beta.1",
+  "name": "react-native-root-portal",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:magicismight/react-native-root-portal.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Horcrux",
+    "email": "master@horcrux.cn"
+  },
+  "homepage": "https://github.com/magicismight/react-native-root-portal",
+  "main": "lib/index.js",
+  "description": "React portal support for react-native based on react-native-root-siblings, components for modals, toasts, loading indicators, cover layers...",
+  "scripts": {
+    "lint": "npx tsc --noEmit && npx eslint ./src/* --fix",
+    "test": "echo no tests",
+    "precommit": "lint-staged",
+    "build": "npx tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "lint-staged": {
+    "./src/*.ts": [
+      "npm run lint",
+      "git add"
+    ]
+  },
+  "keywords": [
+    "react-native",
+    "portal",
+    "gateway",
+    "modal",
+    "cover"
+  ],
+  "devDependencies": {
+    "@types/react": "^16.9.5",
+    "@types/react-native": "^0.60.19",
+    "@typescript-eslint/eslint-plugin": "^2.3.3",
+    "@typescript-eslint/parser": "^2.3.3",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.1.2",
+    "eslint-plugin-react-native": "^3.7.0",
+    "husky": "^3.0.8",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2",
+    "typescript": "^3.6.3"
+  }
+}
