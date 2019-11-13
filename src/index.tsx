@@ -1,4 +1,4 @@
-import { useEffect, useState, ReactNode, FunctionComponent } from 'react';
+import React, { useEffect, useState, ReactNode, FunctionComponent } from 'react';
 import wrapRootComponent, { RootSiblingManager } from 'react-native-root-siblings/lib/wrapRootComponent';
 import ChildrenWrapper from 'react-native-root-siblings/lib/ChildrenWrapper';
 
@@ -30,8 +30,6 @@ export function PortalEntry(props: { children: ReactNode, target: string }): Rea
     console.error(`react-native-root-portal: Can not find target PortalExit named:'${target}'.`);
   }
 
-
-
   return null;
 }
 
@@ -54,12 +52,12 @@ export function PortalExit(props: { name: string }): ReactNode {
   if (!sibling) {
     const { Root, manager } = wrapRootComponent(ChildrenWrapper);
 
-    if (isPortalExisted(props.name)) {
+    if (isPortalExisted(name)) {
       console.error(`react-native-root-portal: Another PortalExit named:'${name}' is already existed.`);
       return null;
     }
 
-    portalManagers.set(props.name, manager);
+    portalManagers.set(name, manager);
     setSibling({
       Root,
       manager

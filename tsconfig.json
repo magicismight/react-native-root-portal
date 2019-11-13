@@ -11,5 +11,5 @@
     "outDir": "./lib"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "ios", "android", "lib"]
+  "exclude": ["node_modules", "lib"]
 }
