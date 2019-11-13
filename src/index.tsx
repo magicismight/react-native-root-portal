@@ -2,7 +2,6 @@ import React, {
   useEffect,
   useState,
   ReactNode,
-  ReactElement,
   FunctionComponent
 } from 'react';
 import wrapRootComponent, {
@@ -16,6 +15,25 @@ let portalUuid = 0;
 export function isPortalExisted(name: string) {
   return portalManagers.has(name);
 }
+
+export function enterPortal(target: string, guest: ReactNode) {
+  const manager = portalManagers.get(target);
+  const id = ++portalUuid;
+
+  if (manager) {
+    manager.update(id.toString(), guest);
+  } else {
+    throw new Error(`react-native-root-portal: Can not find target PortalExit named:'${target}'.`)
+  }
+
+  return {
+    update: (updater: ReactNode) => {
+      manager.update(id.toString(), updater);
+    },
+    remove: () => manager.destroy(id.toString())
+  }
+}
+
 
 export function PortalEntry(props: {
   children: ReactNode;
