@@ -1,5 +1,13 @@
-import React, { useEffect, useState, ReactNode, FunctionComponent } from 'react';
-import wrapRootComponent, { RootSiblingManager } from 'react-native-root-siblings/lib/wrapRootComponent';
+import React, {
+  useEffect,
+  useState,
+  ReactNode,
+  ReactElement,
+  FunctionComponent
+} from 'react';
+import wrapRootComponent, {
+  RootSiblingManager
+} from 'react-native-root-siblings/lib/wrapRootComponent';
 import ChildrenWrapper from 'react-native-root-siblings/lib/ChildrenWrapper';
 
 const portalManagers: Map<string, RootSiblingManager> = new Map();
@@ -9,7 +17,10 @@ export function isPortalExisted(name: string) {
   return portalManagers.has(name);
 }
 
-export function PortalEntry(props: { children: ReactNode, target: string }): ReactNode {
+export function PortalEntry(props: {
+  children: ReactNode;
+  target: string;
+}) {
   const { children, target } = props;
   const manager = portalManagers.get(target);
   const [id] = useState<number>(portalUuid);
@@ -27,14 +38,16 @@ export function PortalEntry(props: { children: ReactNode, target: string }): Rea
   if (manager) {
     manager.update(id.toString(), <>{children}</>);
   } else {
-    console.error(`react-native-root-portal: Can not find target PortalExit named:'${target}'.`);
+    console.error(
+      `react-native-root-portal: Can not find target PortalExit named:'${target}'.`
+    );
   }
 
   return null;
 }
 
-export function PortalExit(props: { name: string }): ReactNode {
-  const [sibling, setSibling ] = useState<{
+export function PortalExit(props: { name: string }) {
+  const [sibling, setSibling] = useState<{
     Root: FunctionComponent;
     manager: RootSiblingManager;
   } | null>(null);
@@ -45,7 +58,7 @@ export function PortalExit(props: { name: string }): ReactNode {
       portalManagers.set(name, sibling.manager);
       return () => {
         portalManagers.delete(name);
-      }
+      };
     }
   }, [name, sibling]);
 
@@ -53,7 +66,9 @@ export function PortalExit(props: { name: string }): ReactNode {
     const { Root, manager } = wrapRootComponent(ChildrenWrapper);
 
     if (isPortalExisted(name)) {
-      console.error(`react-native-root-portal: Another PortalExit named:'${name}' is already existed.`);
+      console.error(
+        `react-native-root-portal: Another PortalExit named:'${name}' is already existed.`
+      );
       return null;
     }
 
@@ -73,4 +88,4 @@ export default {
   Entry: PortalEntry,
   Exit: PortalExit,
   isExisted: isPortalExisted
-}
+};
