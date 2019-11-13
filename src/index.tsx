@@ -30,7 +30,7 @@ export function enterPortal(target: string, guest: ReactNode, callback?: () => v
     update: (updater: ReactNode, updateCallback?: () => void) => {
       manager.update(id.toString(), updater, updateCallback);
     },
-    remove: (removeCallback?: () => void) => manager.destroy(id.toString(), removeCallback)
+    destroy: (destroyCallback?: () => void) => manager.destroy(id.toString(), destroyCallback)
   }
 }
 
