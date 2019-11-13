@@ -105,5 +105,6 @@ export function PortalExit(props: { name: string }) {
 export default {
   Entry: PortalEntry,
   Exit: PortalExit,
-  isExisted: isPortalExisted
+  isExisted: isPortalExisted,
+  enter: enterPortal
 };
