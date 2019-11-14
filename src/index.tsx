@@ -84,10 +84,9 @@ export function PortalExit(props: { name: string }) {
     const { Root, manager } = wrapRootComponent(ChildrenWrapper);
 
     if (isPortalExisted(name)) {
-      console.error(
+      console.warn(
         `react-native-root-portal: Another PortalExit named:'${name}' is already existed.`
       );
-      return null;
     }
 
     portalManagers.set(name, manager);
