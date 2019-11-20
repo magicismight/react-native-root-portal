@@ -16,29 +16,32 @@ export function isPortalExisted(name: string) {
   return portalManagers.has(name);
 }
 
-export function enterPortal(target: string, guest: ReactNode, callback?: () => void) {
+export function enterPortal(
+  target: string,
+  guest: ReactNode,
+  callback?: () => void
+) {
   const manager = portalManagers.get(target);
   const id = ++portalUuid;
 
   if (manager) {
     manager.update(id.toString(), guest, callback);
   } else {
-    throw new Error(`react-native-root-portal: Can not find target PortalExit named:'${target}'.`)
+    throw new Error(
+      `react-native-root-portal: Can not find target PortalExit named:'${target}'.`
+    );
   }
 
   return {
     update: (updater: ReactNode, updateCallback?: () => void) => {
       manager.update(id.toString(), updater, updateCallback);
     },
-    destroy: (destroyCallback?: () => void) => manager.destroy(id.toString(), destroyCallback)
-  }
+    destroy: (destroyCallback?: () => void) =>
+      manager.destroy(id.toString(), destroyCallback)
+  };
 }
 
-
-export function PortalEntry(props: {
-  children: ReactNode;
-  target: string;
-}) {
+export function PortalEntry(props: { children: ReactNode; target: string }) {
   const { children, target } = props;
   const manager = portalManagers.get(target);
   const [id] = useState<number>(portalUuid);
