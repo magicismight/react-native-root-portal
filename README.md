@@ -54,7 +54,7 @@ function EntryDemo(props) {
 
 ### Portal.enter
 
-Put a react node outside react lifecycle.
+Transport a react node outside react lifecycle.
 
 ```
 import Portal from 'react-native-root-portal';
