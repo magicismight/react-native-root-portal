@@ -27,7 +27,7 @@ function ExitDemo(props) {
   return (
     <>
       <OneOfYourComponent />
-      {/* React nodes those put in a `Portal.Entry` named `portkey` will transport to there */}
+      {/* React nodes those put in a `Portal.Entry` named `portkey` will transport to here */}
       <Portal.Exit name={'portkey'} />
     </>
   );
@@ -54,7 +54,7 @@ function EntryDemo(props) {
 
 ### Portal.enter
 
-Put a react node outside react lifecycle.
+Transport a react node outside react lifecycle.
 
 ```
 import Portal from 'react-native-root-portal';
