@@ -27,7 +27,7 @@ function ExitDemo(props) {
   return (
     <>
       <OneOfYourComponent />
-      {/* React nodes those put in a `Portal.Entry` named `portkey` will transport to there */}
+      {/* React nodes those put in a `Portal.Entry` named `portkey` will transport to here */}
       <Portal.Exit name={'portkey'} />
     </>
   );
