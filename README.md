@@ -78,7 +78,7 @@ Check if the name for Portal.Exit is existed in the project, in case of conflict
 ```
 import Portal from 'react-native-root-portal';
 
-// If a Portal.Exit has been rendered in the project it will returns `true`
+// If a Portal.Exit has been rendered in the project it will return `true`
 console.log(Portal.isExisted('portkey'));
 
 ```
