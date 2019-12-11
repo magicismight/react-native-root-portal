@@ -68,22 +68,10 @@ export function PortalEntry(props: { children: ReactNode; target: string }) {
 }
 
 export function PortalExit(props: { name: string }) {
-  const [sibling, setSibling] = useState<{
+  const [sibling] = useState<{
     Root: FunctionComponent;
     manager: RootSiblingManager;
-  } | null>(null);
-
-  const { name } = props;
-  useEffect(() => {
-    if (sibling) {
-      portalManagers.set(name, sibling.manager);
-      return () => {
-        portalManagers.delete(name);
-      };
-    }
-  }, [name, sibling]);
-
-  if (!sibling) {
+  }>(() => {
     const { Root, manager } = wrapRootComponent(ChildrenWrapper);
 
     if (isPortalExisted(name)) {
@@ -93,15 +81,25 @@ export function PortalExit(props: { name: string }) {
     }
 
     portalManagers.set(name, manager);
-    setSibling({
+    return {
       Root,
       manager
-    });
-    return <Root />;
-  } else {
-    const { Root } = sibling;
-    return <Root />;
-  }
+    };
+  });
+
+  const { name } = props;
+
+  useEffect(() => {
+    if (sibling) {
+      portalManagers.set(name, sibling.manager);
+      return () => {
+        portalManagers.delete(name);
+      };
+    }
+  }, [name, sibling]);
+
+  const { Root } = sibling;
+  return <Root />;
 }
 
 export default {
