@@ -68,6 +68,8 @@ export function PortalEntry(props: { children: ReactNode; target: string }) {
 }
 
 export function PortalExit(props: { name: string }) {
+  const { name } = props;
+
   const [sibling] = useState<{
     Root: FunctionComponent;
     manager: RootSiblingManager;
@@ -86,8 +88,6 @@ export function PortalExit(props: { name: string }) {
       manager
     };
   });
-
-  const { name } = props;
 
   useEffect(() => {
     if (sibling) {
