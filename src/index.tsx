@@ -48,11 +48,7 @@ export function enterPortal(
 export function PortalEntry(props: { children: ReactNode; target: string }) {
   const { children, target } = props;
   const manager = portalManagers.get(target);
-  const [id] = useState<number>(portalUuid);
-
-  if (id === portalUuid) {
-    portalUuid++;
-  }
+  const [id] = useState<number>(() => ++portalUuid);
 
   useEffect(() => {
     if (manager) {
