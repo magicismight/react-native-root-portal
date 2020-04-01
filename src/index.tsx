@@ -12,7 +12,11 @@ import ChildrenWrapper from 'react-native-root-siblings/lib/ChildrenWrapper';
 const portalManagers: Map<string, RootSiblingManager> = new Map();
 let portalUuid = 0;
 
-export function isPortalExisted(name: string) {
+function createPortalId(id: number): string {
+  return `portal:${id}`;
+}
+
+export function isPortalExisted(name: string): boolean {
   return portalManagers.has(name);
 }
 
@@ -22,10 +26,10 @@ export function enterPortal(
   callback?: () => void
 ) {
   const manager = portalManagers.get(target);
-  const id = ++portalUuid;
+  const id = createPortalId(++portalUuid);
 
   if (manager) {
-    manager.update(id.toString(), guest, callback);
+    manager.update(id, guest, callback);
   } else {
     throw new Error(
       `react-native-root-portal: Can not find target PortalExit named:'${target}'.`
@@ -34,10 +38,10 @@ export function enterPortal(
 
   return {
     update: (updater: ReactNode, updateCallback?: () => void) => {
-      manager.update(id.toString(), updater, updateCallback);
+      manager.update(id, updater, updateCallback);
     },
     destroy: (destroyCallback?: () => void) =>
-      manager.destroy(id.toString(), destroyCallback)
+      manager.destroy(id, destroyCallback)
   };
 }
 
@@ -52,12 +56,12 @@ export function PortalEntry(props: { children: ReactNode; target: string }) {
 
   useEffect(() => {
     if (manager) {
-      return () => manager.destroy(id.toString());
+      return () => manager.destroy(createPortalId(id));
     }
   }, [manager]);
 
   if (manager) {
-    manager.update(id.toString(), <>{children}</>);
+    manager.update(createPortalId(id), <>{children}</>);
   } else {
     console.error(
       `react-native-root-portal: Can not find target PortalExit named:'${target}'.`
