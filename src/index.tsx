@@ -20,11 +20,19 @@ export function isPortalExisted(name: string): boolean {
   return portalManagers.has(name);
 }
 
+export interface PortalManager {
+  update: (
+    updater: React.ReactNode,
+    updateCallback?: (() => void) | undefined
+  ) => void;
+  destroy: (destroyCallback?: () => void) => void;
+}
+
 export function enterPortal(
   target: string,
   guest: ReactNode,
   callback?: () => void
-) {
+): PortalManager {
   const manager = portalManagers.get(target);
   const id = createPortalId(++portalUuid);
 
@@ -40,8 +48,9 @@ export function enterPortal(
     update: (updater: ReactNode, updateCallback?: () => void) => {
       manager.update(id, updater, updateCallback);
     },
-    destroy: (destroyCallback?: () => void) =>
-      manager.destroy(id, destroyCallback)
+    destroy: (destroyCallback?: () => void) => {
+      manager.destroy(id, destroyCallback);
+    }
   };
 }
 
