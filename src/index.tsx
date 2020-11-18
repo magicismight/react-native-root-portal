@@ -76,14 +76,17 @@ export function PortalEntry(props: { children: ReactNode; target: string }) {
   return null;
 }
 
-export function PortalExit(props: { name: string }) {
-  const { name } = props;
+export function PortalExit(props: {
+  name: string;
+  renderSibling?: (sibling: ReactNode) => ReactNode;
+}) {
+  const { name, renderSibling } = props;
 
   const [sibling] = useState<{
     Root: FunctionComponent;
     manager: RootSiblingManager;
   }>(() => {
-    const { Root, manager } = wrapRootComponent(ChildrenWrapper);
+    const { Root, manager } = wrapRootComponent(ChildrenWrapper, renderSibling);
 
     if (isPortalExisted(name)) {
       console.warn(
