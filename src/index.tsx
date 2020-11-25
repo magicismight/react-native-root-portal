@@ -1,6 +1,7 @@
 import React, {
   useEffect,
   useState,
+  useMemo,
   ReactNode,
   FunctionComponent
 } from 'react';
@@ -79,10 +80,11 @@ export function PortalEntry(props: { children: ReactNode; target: string }) {
 export function PortalExit(props: {
   name: string;
   renderSibling?: (sibling: ReactNode) => ReactNode;
+  children?: ReactNode;
 }) {
-  const { name, renderSibling } = props;
+  const { name, renderSibling, children } = props;
 
-  const [sibling] = useState<{
+  const sibling = useMemo<{
     Root: FunctionComponent;
     manager: RootSiblingManager;
   }>(() => {
@@ -99,19 +101,25 @@ export function PortalExit(props: {
       Root,
       manager
     };
-  });
+  }, []);
 
   useEffect(() => {
-    if (sibling) {
+    if (!portalManagers.has(name)) {
       portalManagers.set(name, sibling.manager);
-      return () => {
-        portalManagers.delete(name);
-      };
     }
-  }, [name, sibling]);
+
+    return () => {
+      portalManagers.delete(name);
+    };
+  }, [name]);
 
   const { Root } = sibling;
-  return <Root />;
+  return (
+    <>
+      {children}
+      <Root />
+    </>
+  );
 }
 
 export default {
