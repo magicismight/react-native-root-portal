@@ -55,9 +55,9 @@ export function enterPortal(
   };
 }
 
-export function PortalEntry(props: { children: ReactNode; target: string }) {
+export function PortalEntry(props: { children: ReactNode; target?: string }) {
   const { children, target } = props;
-  const manager = portalManagers.get(target);
+  const manager = target ? portalManagers.get(target) : null;
   const [id] = useState<number>(() => ++portalUuid);
 
   useEffect(() => {
@@ -68,10 +68,12 @@ export function PortalEntry(props: { children: ReactNode; target: string }) {
 
   if (manager) {
     manager.update(createPortalId(id), <>{children}</>);
-  } else {
+  } else if (target) {
     console.error(
       `react-native-root-portal: Can not find target PortalExit named:'${target}'.`
     );
+  } else {
+    return <>{children}</>;
   }
 
   return null;
